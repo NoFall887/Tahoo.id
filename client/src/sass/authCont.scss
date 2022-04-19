@@ -5,3 +5,28 @@
   width: 100%;
   min-height: 100vh;
 }
+
+#form-container{
+  font-family: 'Montserrat', sans-serif;
+  text-align: center;
+  background-color: #F0BB62;
+  max-width: 410px;
+  width: 100%;
+  border-radius: 18px;
+  h1 {
+    font-weight: 800;
+    font-size: 3.75rem;
+  }
+
+  p{
+    font-weight: 500;
+  }
+
+  p:nth-child(2) {
+    font-weight: 700;
+    font-size: 1.125rem;
+  }
+  button {
+    font-weight: 600;
+  }
+}
