@@ -19,6 +19,7 @@ async function getUser(username) {
   const queryText = "SELECT * FROM data_profile WHERE username=$1"
   try {
     var res = await pool.query(queryText, [username])
+    
     return res.rows[0]
   } catch (err) {
     console.log(err)

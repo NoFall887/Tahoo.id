@@ -4,7 +4,6 @@ const LocalStrategy = require("passport-local").Strategy
 const bcrypt = require("bcrypt")
 
 passport.use(new LocalStrategy(
-  
   async (username, password, done) => {
     const userData = await getUser(username);
     if(!userData) {return done(null,false,{"message": "username not found"})}
@@ -13,8 +12,8 @@ passport.use(new LocalStrategy(
       if(err) {
         return done(null, false, {"message" : "incorrect password"})
       }
+
       if(isMatch) {
-        console.log("succes")
         return done(null, userData)
       }
     })
@@ -22,10 +21,12 @@ passport.use(new LocalStrategy(
 ))
 
 passport.serializeUser((user, done) => {
+  console.log(user)
   done(null, user)
 })
 
 passport.deserializeUser((user, done) => {
+  console.log(user)
   done(null, user)
 })
 

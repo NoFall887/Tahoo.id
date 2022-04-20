@@ -6,11 +6,11 @@ const pool = require("./models/pool").pool
 const pgSession = require("connect-pg-simple")(session)
 const passport = require("passport")
 const authControl = require("./controllers/authentication")
-const { Passport } = require("passport")
+const cors = require("cors")
 
 dotenv.config()
 app.use(express.json())
-
+app.use(cors({credentials:true, origin:'http://localhost:3000'}))
 const sessionStore = new pgSession({pool:pool})
 
 app.use(session({
@@ -28,7 +28,8 @@ app.use(passport.session())
 
 require("./controllers/passportJS")
 
-app.use("/", authControl);
+app.use("/auth", authControl);
+
 
 const listener =  app.listen(process.env.PORT||5000, ()=>{
   console.log("server running on port " + listener.address().port)
