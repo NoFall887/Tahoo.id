@@ -31,7 +31,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={user? <Home/> : <Navigate to={"/login"}/>} />
+        <Route path="/" element={user? <Home user={user} /> : <Navigate to={"/login"}/>} />
         <Route path='/login' element={user?  <Navigate to={"/"} replace={true}/>: <Login setUser={setUser} />}/>
         <Route path='/register' element={user? <Navigate to={"/"} replace={true}/>:<Register setUser={setUser} />}/>
       </Routes>

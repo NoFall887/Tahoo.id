@@ -8,9 +8,6 @@ export default function Products({select}) {
 
   useEffect(() => {
     function fetchProducts(){
-      if (products !== null) {
-        return
-      }
       axios.get('http://localhost:5000/products', {
           withCredentials:true
       }).then(

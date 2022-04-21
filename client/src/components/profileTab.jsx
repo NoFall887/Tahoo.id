@@ -1,7 +1,0 @@
-import React from 'react'
-
-export default function ProfileTab() {
-  return (
-    <div></div>
-  )
-}
