@@ -27,7 +27,7 @@ function Register({setUser}) {
         }
       )
     } else {
-      alert("ulang bos")
+      alert("konfirmasi password tidak sesuai")
     }
   }
   

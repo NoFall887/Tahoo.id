@@ -3,7 +3,6 @@ import {Form, Button, FloatingLabel} from"react-bootstrap"
 import {Link, useNavigate} from "react-router-dom"
 import { useState } from "react";
 import axios from "axios";
-// import Home from "./home";
 
 export default function Login({setUser}){
   const [username, setUsername] = useState("")

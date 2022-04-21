@@ -7,6 +7,8 @@ const pgSession = require("connect-pg-simple")(session)
 const passport = require("passport")
 const authControl = require("./controllers/authentication")
 const cors = require("cors")
+const cloudinary = require('./controllers/cloudinaryConf')
+const productRoute = require("./controllers/product")
 
 dotenv.config()
 app.use(express.json())
@@ -29,7 +31,7 @@ app.use(passport.session())
 require("./controllers/passportJS")
 
 app.use("/auth", authControl);
-
+app.use('/', productRoute)
 
 const listener =  app.listen(process.env.PORT||5000, ()=>{
   console.log("server running on port " + listener.address().port)

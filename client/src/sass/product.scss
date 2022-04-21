@@ -1,0 +1,100 @@
+.products{
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.product-item {
+  padding: 1rem;
+  border-radius: 10px;
+  width: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  cursor: pointer;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  transition: all 200ms ease-in-out;
+  &:hover {
+    background-color: rgb(252, 240, 227);
+  }
+}
+
+.product-img-container {
+  flex: 1;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.product-name {
+  text-align: center;
+  font-weight: 600;
+  font-size: 18px;
+  margin: 0;
+}
+
+
+#jumlah {
+  text-align: center;
+}
+
+.product-detail-container {
+  img {
+    width: 100%;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+    border-radius: 12px;
+  }
+  p {
+    font-weight: 600;
+    font-size: 1.25rem;
+    text-align: center;
+  }
+}
+
+.btn-detail-container {
+  gap: 20px;
+  button {
+    flex: 1;
+  }
+}
+
+.order-form-container {
+  label {
+    font-size: 1.125rem;
+    font-weight: 500;
+  }
+}
+
+.harga {
+  p {
+    font-weight: 500;
+    &:first-child{
+      font-size: 1.125rem;
+      margin-bottom: 4px;
+    }
+
+    &:last-child{
+      font-size: 1.5rem;
+    }
+  }
+}
+
+.total {
+  p {
+    font-weight: 500;
+    &:first-child{
+      font-size: 1.125rem;
+      margin-bottom: 4px;
+    }
+
+    &:last-child{
+      font-size: 1.5rem;
+      color: #FF7E81;
+    }
+  }
+}

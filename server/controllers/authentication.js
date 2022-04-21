@@ -1,10 +1,9 @@
 const { insertUser } = require("../models/userProfile")
 const bcrypt = require("bcrypt")
 const passport = require("passport")
-const router  = require("express").Router()
+const authRouter  = require("express").Router()
 
-router.get("/authVerify", (req,res) => {
-  // res.json(req.user)
+authRouter.get("/authVerify", (req,res) => {
   if (req.user) {
     res.status(200).json({
       success: true,
@@ -17,7 +16,7 @@ router.get("/authVerify", (req,res) => {
   
 })
 
-router.post("/register", 
+authRouter.post("/register", 
 async (req, res, next) => {
   let password = await bcrypt.hash(req.body.password, 12)
   const user = {
@@ -43,8 +42,8 @@ insertUser,
   })
 })
 
-router.post("/login", passport.authenticate("local", {failureRedirect:"htpp://localhost:3000/login"}), (req, res) => {
+authRouter.post("/login", passport.authenticate("local", {failureRedirect:"htpp://localhost:3000/login"}), (req, res) => {
   res.status(200).json({success:true, user: req.user})
 })
 
-module.exports = router
+module.exports = authRouter
