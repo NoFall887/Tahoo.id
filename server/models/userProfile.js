@@ -2,7 +2,7 @@ const { pool } = require("./pool");
 
 // require username password email as argument
 function insertUser(req, res, next){
-  const queryText = "INSERT INTO data_profile(username, password, email, is_admin) VALUES($1, $2, $3, false)"
+  const queryText = "INSERT INTO data_profile(nama, username, password, email, is_admin) VALUES($1,$1, $2, $3, false)"
   const {username, password, email} = req.user;
   
   pool.query(queryText, [username, password, email], (err, data)=>{

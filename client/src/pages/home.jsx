@@ -5,7 +5,7 @@ import ProductTab from '../Tabs/productTab'
 import ProfileTab from '../Tabs/profileTab'
 
 const emptyProfile = 'https://res.cloudinary.com/dgmknbm2h/image/upload/v1650552671/ppl/blank-profile-picture-973460_1280-300x300_lnk5bk.jpg'
-function Home({user}) {
+function Home({user, setUser}) {
   return (
     <>
       <NavbarCustom user={user} emptyProfile={emptyProfile}></NavbarCustom>
@@ -22,7 +22,7 @@ function Home({user}) {
               <div>lorem</div>
             </Tab>
             <Tab eventKey="Profile" title="Profile">
-              <ProfileTab user={user} emptyProfile={emptyProfile}/>
+              <ProfileTab user={user} setUser={setUser} emptyProfile={emptyProfile}/>
             </Tab>
           </Tabs>
         </Row> 

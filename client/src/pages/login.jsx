@@ -1,13 +1,13 @@
 import AuthContainer from "../components/authContainer";
 import {Form, Button, FloatingLabel} from"react-bootstrap"
-import {Link, useNavigate} from "react-router-dom"
+import {Link, useLocation, useNavigate} from "react-router-dom"
 import { useState } from "react";
 import axios from "axios";
 
 export default function Login({setUser}){
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
-  
+  const msgData = useLocation()
 
   function handleSubmit(e) {
     e.preventDefault()
@@ -24,7 +24,7 @@ export default function Login({setUser}){
   return(
     <AuthContainer>
       <h1 className="mb-3">Tahoo.Id</h1>
-      <p className="mb-4">Login untuk masuk</p>
+      <p className="mb-4">{msgData.state?.msg ? msgData.state?.msg:"Login untuk masuk"}</p>
       <Form className="mb-3" onSubmit={handleSubmit}>
         <FloatingLabel label="Username" className="mb-4" controlId="username">
           <Form.Control type="text" placeholder="Username" required onChange={(e) => setUsername(e.target.value)} value={username} />

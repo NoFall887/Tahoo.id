@@ -19,7 +19,7 @@ function App() {
         } else {
           return setUser(false)
         }
-      }).catch(err => console.log(err))
+      }).catch(err => setUser(false))
     }
     verify();
   }, [])
@@ -31,7 +31,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={user? <Home user={user} /> : <Navigate to={"/login"}/>} />
+        <Route path="/" element={user? <Home user={user} setUser={setUser} /> : <Navigate to={"/login"}/>} />
         <Route path='/login' element={user?  <Navigate to={"/"} replace={true}/>: <Login setUser={setUser} />}/>
         <Route path='/register' element={user? <Navigate to={"/"} replace={true}/>:<Register setUser={setUser} />}/>
       </Routes>

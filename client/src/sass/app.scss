@@ -3,8 +3,8 @@
 @forward "./nvabar.scss";
 @forward "./home.scss";
 @forward "./product.scss";
-
-$primary: #FFBC6D;
+@forward "./profile.scss";
+$secondary: #FFBC6D;
 @import "~bootstrap/scss/bootstrap";
 
 

@@ -12,7 +12,7 @@ const productRoute = require("./controllers/product")
 
 dotenv.config()
 app.use(express.json())
-app.use(cors({credentials:true, origin:'http://localhost:3000'}))
+app.use(cors({credentials:true, origin:'http://localhost:3000',methods: "GET,HEAD,PUT,PATCH,POST,DELETE"}))
 const sessionStore = new pgSession({pool:pool})
 
 app.use(session({

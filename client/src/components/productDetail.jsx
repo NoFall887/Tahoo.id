@@ -32,7 +32,7 @@ export default function ProductDetail({product, select}) {
           <Form.Group className='mb-3' controlId='jumlah'>
             <Form.Label>Jumlah</Form.Label>
             <InputGroup>
-              <Button variant="outline-primary" id="subtract" onClick={(e) => handleChange(jumlah-1)}>
+              <Button variant="outline-secondary" id="subtract" onClick={(e) => handleChange(jumlah-1)}>
               <RemoveCircleOutlineRoundedIcon/>
               </Button>
               <FormControl
@@ -40,7 +40,7 @@ export default function ProductDetail({product, select}) {
                 value={jumlah}
                 onChange={e => handleChange(e.target.value)}
               />
-              <Button variant="outline-primary" id="add" onClick={(e) => handleChange(jumlah+1)}>
+              <Button variant="outline-secondary" id="add" onClick={(e) => handleChange(jumlah+1)}>
                 <AddCircleOutlineRoundedIcon/>
               </Button>
             </InputGroup>
@@ -52,7 +52,7 @@ export default function ProductDetail({product, select}) {
           
           <div className='d-flex btn-detail-container'>
             <Button variant='outline-danger' onClick={() => select(false)}>Kembali</Button>
-            <Button variant='primary'>Pesan</Button>
+            <Button variant='secondary'>Pesan</Button>
           </div>
           
         </Form>

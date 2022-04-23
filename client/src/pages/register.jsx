@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import AuthContainer from '../components/authContainer'
 import {Form, Button, FloatingLabel} from "react-bootstrap"
-import {Link} from "react-router-dom"
+import {Link, Navigate, useNavigate} from "react-router-dom"
 import axios from 'axios'
 
 function Register({setUser}) {
@@ -9,7 +9,7 @@ function Register({setUser}) {
   const [password, setPassword] = useState("")
   const [passValidation, setPassValidation] = useState("")
   const [email, setEmail] = useState("")
-
+  let navigate = useNavigate()
   function handleSubmit(e){
     e.preventDefault()
     if(password === passValidation){
@@ -20,9 +20,13 @@ function Register({setUser}) {
       }, {withCredentials:true}).then(
         response => {
           if(response.status === 200 && response.data.success === true) {
-            setUser(response.data.user)
+            // setUser(response.data.user)
+            
+            navigate('/login', {state:{"msg": "Registrasi berhasil silahkan login!"}})
           } else if(response.data === "23505") {
             alert("username atau email sudah ada")
+          } else{
+            alert("something went wrong")
           }
         }
       )
@@ -42,7 +46,7 @@ function Register({setUser}) {
         </FloatingLabel>
 
         <FloatingLabel label="Email" className="mb-4" controlId="email">
-          <Form.Control type="text" placeholder="Email" required value={email} onChange={e => setEmail(e.target.value)}/>
+          <Form.Control type="email" placeholder="Email" required value={email} onChange={e => setEmail(e.target.value)}/>
         </FloatingLabel>
 
         <FloatingLabel label="Password" className="mb-4" controlId="password">
