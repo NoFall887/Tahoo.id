@@ -1,0 +1,28 @@
+.profile-img {
+  &-input {
+    display: none;
+  }
+  &-label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    padding: 12px;
+    position: absolute;
+    right: 12%;
+    background-color: #FFBC6D;
+    transition: 300ms ease;
+    &:hover {
+      background-color: #ffd29e;
+    }
+  }
+}
+
+.user-img-container {
+  position: relative;
+}
+
+#pass-edit-btn {
+  transition: all 200ms ease-in-out;
+  gap: 6px;
+}

@@ -1,27 +1,31 @@
 import axios from 'axios'
 import React, { useState } from 'react'
-import { Button, Col, Image, Row } from 'react-bootstrap'
+import { Button, Col, Image, Row, Spinner } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import ProfileEditForm from '../components/profileEditForm'
 
 export default function ProfileTab({user, emptyProfile, setUser}) {
   let navigate = useNavigate()
   const [editMode, setEditMode] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   function edit() {
     setEditMode(true)
   }
 
   function handleLogout() {
+    setIsLoading(true)
     axios.post('http://localhost:5000/auth/logout', {}, {withCredentials:true})
     .then(response => {
       if(response.data.success === true) {
+        setIsLoading(false)
         setUser(false)
         navigate('/login')
+        return
       }
     })
   }
 
-  if (editMode) return <ProfileEditForm/>
+  if (editMode) return <ProfileEditForm user={user} emptyProfile={emptyProfile} setUser={setUser} setEditMode={setEditMode} />
 
   return (
     <Row className='justify-content-around profile-container align-items-center'>
@@ -40,8 +44,10 @@ export default function ProfileTab({user, emptyProfile, setUser}) {
         </div>
 
         <div className='d-grid gap-3'>
-          <Button onClick={edit} className='rounded-pill'>Ubah data akun</Button>
-          <Button onClick={handleLogout} variant='danger' className='rounded-pill'> Logout</Button>
+          <Button onClick={edit} className='rounded-pill' >Ubah data akun</Button>
+          <Button onClick={handleLogout} variant='danger' className='rounded-pill' disabled={isLoading} >
+            {isLoading ? <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" /> : "Logout" }
+          </Button>
         </div>
         
       </Col>

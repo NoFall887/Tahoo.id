@@ -42,19 +42,21 @@ insertUser,
   })
 })
 
-authRouter.post("/login", passport.authenticate("local", {failureRedirect:"htpp://localhost:3000/login"}), (req, res) => {
+authRouter.post("/login", passport.authenticate("local"), (req, res) => {
   res.status(200).json({success:true, user: req.user})
 })
 
 authRouter.post('/logout', async (req, res)=>{
-  // req.session.destroy((err)=> {
-  //   if (err) return res.status(500).json(err)
-  //   await res.clearCookie('connect.sid')
-  //   res.status(200).json({success: true})
-  //   return
-  // })
   req.logout()
   res.status(200).json({success: true})
 })
 
-module.exports = authRouter
+function checkAuth(req, res, next) {
+  if(req.isAuthenticated()){
+    next()
+  } else {
+    res.status(401).json({msg: 'authentication failed'})
+  }
+}
+
+module.exports = {authRouter, checkAuth}

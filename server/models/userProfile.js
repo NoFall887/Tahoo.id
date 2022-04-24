@@ -26,4 +26,37 @@ async function getUser(username) {
   }
 }
 
-module.exports = {insertUser, getUser}
+async function updatePassword(id,password) {
+  const queryText = 
+`UPDATE data_profile 
+SET password=$2
+WHERE id_profile=$1
+RETURNING * ;`
+  try {
+    var res = await pool.query(queryText, [parseInt(id), password])
+    return res.rows[0]
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+async function updateUser({
+  id,username, nama, email, foto
+} = {}) {
+  const queryText = 
+`UPDATE data_profile 
+SET username = $1,
+    nama = $2,
+    email = $3,
+    foto = $4 
+WHERE id_profile=$5
+RETURNING * ;`
+  try {
+    var res = await pool.query(queryText, [username, nama, email, foto, parseInt(id)])
+    // console.log(res.rows[0])
+    return res.rows[0]
+  } catch (err) {
+    console.log(err)
+  }
+}
+module.exports = {insertUser, getUser, updateUser, updatePassword}

@@ -21,12 +21,12 @@ passport.use(new LocalStrategy(
 ))
 
 passport.serializeUser((user, done) => {
-  console.log(user)
+  // console.log(user)
   done(null, user)
 })
 
 passport.deserializeUser((user, done) => {
-  console.log(user)
+  // console.log(user)
   done(null, user)
 })
 

@@ -20,9 +20,9 @@ function Register({setUser}) {
       }, {withCredentials:true}).then(
         response => {
           if(response.status === 200 && response.data.success === true) {
-            // setUser(response.data.user)
-            
+            console.log(response.data)
             navigate('/login', {state:{"msg": "Registrasi berhasil silahkan login!"}})
+
           } else if(response.data === "23505") {
             alert("username atau email sudah ada")
           } else{
