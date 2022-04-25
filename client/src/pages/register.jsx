@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import AuthContainer from '../components/authContainer'
-import {Form, Button, FloatingLabel} from "react-bootstrap"
+import {Form, Button, FloatingLabel, Spinner} from "react-bootstrap"
 import {Link, Navigate, useNavigate} from "react-router-dom"
 import axios from 'axios'
 
@@ -9,8 +9,11 @@ function Register({setUser}) {
   const [password, setPassword] = useState("")
   const [passValidation, setPassValidation] = useState("")
   const [email, setEmail] = useState("")
+  const [isLoading, setIsLoading] = useState(false)
   let navigate = useNavigate()
+
   function handleSubmit(e){
+    setIsLoading(true)
     e.preventDefault()
     if(password === passValidation){
       axios.post('http://localhost:5000/auth/register', {
@@ -19,8 +22,9 @@ function Register({setUser}) {
         password:password
       }, {withCredentials:true}).then(
         response => {
+          setIsLoading(false)
           if(response.status === 200 && response.data.success === true) {
-            console.log(response.data)
+            
             navigate('/login', {state:{"msg": "Registrasi berhasil silahkan login!"}})
 
           } else if(response.data === "23505") {
@@ -53,12 +57,12 @@ function Register({setUser}) {
           <Form.Control type="password" placeholder="Password" required value={password} onChange={e => setPassword(e.target.value)}/>
         </FloatingLabel>
         
-          <FloatingLabel label="Konfirmasi password" className="mb-4" controlId="confirmPassword">
-            <Form.Control type="password" placeholder="Konfirmasi password" required value={passValidation} onChange={e => setPassValidation(e.target.value)}/>
-          </FloatingLabel>
+        <FloatingLabel label="Konfirmasi password" className="mb-4" controlId="confirmPassword">
+          <Form.Control type="password" placeholder="Konfirmasi password" required value={passValidation} onChange={e => setPassValidation(e.target.value)}/>
+        </FloatingLabel>
           
-        <Button variant="primary" type="submit" className="rounded-pill py-2 px-5">
-          Registrasi
+        <Button variant="primary" type="submit" className="rounded-pill py-2 px-5" disabled={isLoading}>
+          {isLoading ? <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" /> : "Registrasi" }
         </Button>
       </Form>
 
