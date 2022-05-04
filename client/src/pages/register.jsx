@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import AuthContainer from '../components/authContainer'
+import AuthContainer from '../components/authentication/authContainer'
 import {Form, Button, FloatingLabel, Spinner} from "react-bootstrap"
 import {Link, Navigate, useNavigate} from "react-router-dom"
 import axios from 'axios'
@@ -22,16 +22,17 @@ function Register({setUser}) {
         password:password
       }, {withCredentials:true}).then(
         response => {
-          setIsLoading(false)
+          
           if(response.status === 200 && response.data.success === true) {
-            
-            navigate('/login', {state:{"msg": "Registrasi berhasil silahkan login!"}})
+            setUser(response.data.user)
+            // navigate('/login', {state:{"msg": "Registrasi berhasil silahkan login!"}})
 
           } else if(response.data === "23505") {
             alert("username atau email sudah ada")
           } else{
             alert("something went wrong")
           }
+          setIsLoading(false)
         }
       )
     } else {

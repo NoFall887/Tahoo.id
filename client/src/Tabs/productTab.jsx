@@ -1,12 +1,15 @@
 import React, { useState } from 'react'
-import ProductDetail from '../components/productDetail'
-import Products from '../components/products'
+import ProductDetail from '../components/products/productDetail'
+import Products from '../components/products/products'
 
-export default function ProductTab() {
-  var [selectedProduct, setSelectedProduct] = useState(false)
-
-  return (
-    selectedProduct ? <ProductDetail select={setSelectedProduct} product={selectedProduct} />:<Products select={setSelectedProduct}/>
+const ProductTab = React.memo(
+  ({user, setChangeOrder}) => {
+    const [selectedProduct, setSelectedProduct] = useState(false)
     
-  )
-}
+    return (
+      selectedProduct ? <ProductDetail setChangeOrder={setChangeOrder} select={setSelectedProduct} product={selectedProduct} user={user} />:<Products select={setSelectedProduct}/>
+    )
+  }
+) 
+
+export default ProductTab

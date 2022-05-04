@@ -2,7 +2,7 @@ const { pool } = require("./pool");
 
 // require username password email as argument
 function insertUser(req, res, next){
-  const queryText = "INSERT INTO data_profile(nama, username, password, email, is_admin) VALUES($1,$1, $2, $3, false)"
+  const queryText = "INSERT INTO data_profile(nama, username, password, email, is_admin) VALUES($1,$1, $2, $3, false) RETURNING *;"
   const {username, password, email} = req.user;
   
   pool.query(queryText, [username, password, email], (err, data)=>{
@@ -10,7 +10,7 @@ function insertUser(req, res, next){
       req.err = err["code"];
       next()
     }
-    req.data = data
+    req.data = data.rows[0]
     next()
   })
 }
@@ -53,7 +53,6 @@ WHERE id_profile=$5
 RETURNING * ;`
   try {
     var res = await pool.query(queryText, [username, nama, email, foto, parseInt(id)])
-    // console.log(res.rows[0])
     return res.rows[0]
   } catch (err) {
     console.log(err)

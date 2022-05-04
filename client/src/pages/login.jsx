@@ -1,6 +1,6 @@
-import AuthContainer from "../components/authContainer";
+import AuthContainer from "../components/authentication/authContainer";
 import {Form, Button, FloatingLabel, Spinner} from"react-bootstrap"
-import {Link, useLocation, useNavigate} from "react-router-dom"
+import {Link} from "react-router-dom"
 import { useState } from "react";
 import axios from "axios";
 import ModalCustom from "../components/modal";
@@ -10,7 +10,6 @@ export default function Login({setUser}){
   const [password, setPassword] = useState("")
   const [show, setShow] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-  const msgData = useLocation()
 
   function handleSubmit(e) {
     e.preventDefault()
@@ -26,7 +25,6 @@ export default function Login({setUser}){
         setIsLoading(false)
         setUser(response.data.user)
       }
-      console.log(response.data.success)
     }).catch(err => {
       setShow(true)
       setIsLoading(false)
@@ -35,9 +33,12 @@ export default function Login({setUser}){
 
   return(
     <AuthContainer>
-      <ModalCustom head={"Login gagal"} body={"Silahkan cek username dan password anda"} show={show} setShow={setShow} />
+      <ModalCustom head={"Login gagal"} show={show} setShow={setShow}>
+        Silahkan cek username dan password anda
+      </ModalCustom>
       <h1 className="mb-3">Tahoo.Id</h1>
-      <p className="mb-4">{msgData.state?.msg ? msgData.state?.msg:"Login untuk masuk"}</p>
+      
+      <p className="mb-4">Login untuk masuk</p>
       <Form className="mb-3" onSubmit={handleSubmit}>
         <FloatingLabel label="Username" className="mb-4" controlId="username">
           <Form.Control type="text" placeholder="Username" required onChange={(e) => setUsername(e.target.value)} value={username} />

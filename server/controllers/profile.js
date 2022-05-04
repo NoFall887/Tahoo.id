@@ -4,13 +4,10 @@ const upload = require('./multer')
 const profileRouter = require('express').Router()
 const streamifier = require('streamifier')
 const { updateUser, updatePassword } = require('../models/userProfile')
-const passport = require('passport')
 const bcrypt = require('bcrypt')
 
 async function imgUpload(req, res, next) {
-  console.log(req.body.imgIsChange)
   if (req.body.imgIsChange === "false") {return next()}
-
   
   let streamUpload = (req) => {
     return new Promise((resolve, reject) => {
@@ -50,7 +47,6 @@ profileRouter.put('/update-user/:id', checkAuth, upload.any(), imgUpload, async 
   })
   .then(
     result => {
-      if (passwordEdit === true) result.password = password
       req.login(result, function(err) {
           if (err) {
             console.log(err)
@@ -65,5 +61,4 @@ profileRouter.put('/update-user/:id', checkAuth, upload.any(), imgUpload, async 
   )
 })
 
-
-module.exports = profileRouter
+module.exports = {profileRouter, imgUpload}

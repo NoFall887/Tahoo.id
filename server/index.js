@@ -9,7 +9,8 @@ const {authRouter} = require("./controllers/authentication")
 const cors = require("cors")
 const cloudinary = require('./controllers/cloudinaryConf')
 const productRoute = require("./controllers/product")
-const profileRouter = require("./controllers/profile")
+const {profileRouter} = require("./controllers/profile")
+const orderRoute = require("./controllers/order")
 
 dotenv.config()
 app.use(express.json())
@@ -34,6 +35,7 @@ require("./controllers/passportJS")
 app.use("/auth", authRouter);
 app.use('/', productRoute)
 app.use('/',profileRouter)
+app.use('/', orderRoute)
 
 const listener =  app.listen(process.env.PORT||5000, ()=>{
   console.log("server running on port " + listener.address().port)

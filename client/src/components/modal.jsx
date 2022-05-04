@@ -1,7 +1,7 @@
 import React from 'react'
 import { Modal, Button } from 'react-bootstrap'
 
-export default function ModalCustom({head, body, show, setShow}) {
+export default function ModalCustom({head, show, setShow, children}) {
   function hideModal() {
     setShow(false)
   }
@@ -12,7 +12,7 @@ export default function ModalCustom({head, body, show, setShow}) {
         {head}
       </Modal.Header>
       <Modal.Body>
-        {body}
+        {children}
       </Modal.Body>
       <Modal.Footer>
         <Button variant="primary" onClick={hideModal}>

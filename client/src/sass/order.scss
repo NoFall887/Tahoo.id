@@ -1,0 +1,98 @@
+.confirm-order-container {
+  text-align: center;
+  border-radius: 12px;
+  border-top: 12px solid lightgreen;
+}
+
+.confirm-text {
+  &-1{
+    font-size: 1.25rem;
+    font-weight: 700;
+  }
+  &-2 {
+    margin-bottom: 2rem;
+  }
+}
+
+.confirm-btn-container {
+  width: 100%;
+  max-width: 30rem;
+  margin: auto;
+  gap: 1.75rem;
+  button {
+    flex: 1;
+  }
+}
+
+.order-edit-btn {
+  height: fit-content;
+}
+
+.order-item {
+  gap: 16px;
+  .badge{
+    margin-left: auto;
+  }
+  &-img {
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    max-width: 70px;
+    border-radius: 10px;
+  }
+}
+
+.order-text-container {
+  & p:first-child {
+    font-weight: 700;
+    margin: 0;
+    font-size: 1.125rem;
+  }
+
+  & p:last-child {
+    color: grey;
+    margin: 0;
+  }
+}
+
+.total-text {
+  p{
+    font-weight: 600;
+    margin: 0;
+  }
+
+  span {
+    color: #FF7E81;
+    font-weight: 500;
+  }
+}
+
+.order-proof-btn {
+  height: fit-content;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.empty-order {
+  flex-direction: column;
+  gap: 1.5rem;
+  p {
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: rgba(128, 128, 128, 0.5);
+  }
+}
+
+#bukti-transaksi {
+  display: none;
+}
+
+.transaction-img {
+  width: 100%;
+}
+
+.edit-order-field{
+  input {
+    max-width: 5rem;
+    text-align: center;
+  }
+}

@@ -42,6 +42,22 @@
   text-align: center;
 }
 
+.product-detail {
+  position: relative;
+}
+
+.order-alert {
+  position: absolute !important;
+  width: fit-content !important;
+  height: fit-content;
+  left: 0;
+  bottom: 0;
+  margin-bottom: 0 !important;
+  p {
+    margin: 0;
+  }
+}
+
 .product-detail-container {
   img {
     width: 100%;
@@ -49,10 +65,10 @@
     object-fit: cover;
     border-radius: 12px;
   }
-  p {
-    font-weight: 600;
+  .product-detail-name {
+    font-weight: 700;
     font-size: 1.25rem;
-    text-align: center;
+    text-align: left;
   }
 }
 
@@ -64,6 +80,7 @@
 }
 
 .order-form-container {
+  height: fit-content;
   label {
     font-size: 1.125rem;
     font-weight: 500;

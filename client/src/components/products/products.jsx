@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Col, Row } from 'react-bootstrap'
 import axios from 'axios'
 import Product from './product'
+import Loading from '../loading'
 
 export default function Products({select}) {
   var [products, setProducts] = useState(null)
@@ -20,7 +21,7 @@ export default function Products({select}) {
     fetchProducts()
   }, [])
   
-  if(products === null) return <p>loading....</p>
+  if(products === null) return <Loading/>
 
   return (
     

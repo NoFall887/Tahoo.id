@@ -30,19 +30,24 @@ async (req, res, next) => {
 insertUser, 
 (req, res) => {
   if(req.err) {
-    res.json(req.err)
+    return res.json(req.err)
   }
-  let user = {username: req.user.username, password:req.user.password}
-  req.login(user, function(err) {
+  
+  req.data
+  req.login(req.data, function(err) {
     if (err) {
-      res.status(200).json("registration fail")
-      return
+      return res.status(200).json("registration fail")
+      
+    } else{
+      return res.status(200).json({success:true, user: req.user})
+      
     }
-    res.status(200).json({success:true, user: req.user})
+    
   })
 })
 
 authRouter.post("/login", passport.authenticate("local"), (req, res) => {
+  console.log(req.user)
   res.status(200).json({success:true, user: req.user})
 })
 
