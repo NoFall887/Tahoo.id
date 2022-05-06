@@ -17,7 +17,10 @@ export default function OrderEditBtn({onEdit, setOnEdit, jumlah, data}) {
       if(response.data.success) {
         setIsLoading(false)
         setOnEdit(false)
+        return
       }
+      setIsLoading(false)
+      setOnEdit(false)
     })
   }
   if (onEdit) return(

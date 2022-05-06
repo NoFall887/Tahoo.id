@@ -19,13 +19,19 @@ export default function Login({setUser}){
       password: password
       
     },{withCredentials:true,}).then(response => {
-      console.log(response.data.success)
-      if(response.status === 200 && response.data.success === true) {
+      console.log(response)
+      if(response.data.success === true) {
         
         setIsLoading(false)
         setUser(response.data.user)
+        return
+      }else {
+        setShow(true)
+        setIsLoading(false)
       }
+      
     }).catch(err => {
+      console.log(err)
       setShow(true)
       setIsLoading(false)
     })

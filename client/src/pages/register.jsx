@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import AuthContainer from '../components/authentication/authContainer'
 import {Form, Button, FloatingLabel, Spinner} from "react-bootstrap"
-import {Link, Navigate, useNavigate} from "react-router-dom"
+import {Link} from "react-router-dom"
 import axios from 'axios'
 
 function Register({setUser}) {
@@ -10,7 +10,6 @@ function Register({setUser}) {
   const [passValidation, setPassValidation] = useState("")
   const [email, setEmail] = useState("")
   const [isLoading, setIsLoading] = useState(false)
-  let navigate = useNavigate()
 
   function handleSubmit(e){
     setIsLoading(true)
