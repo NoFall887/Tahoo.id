@@ -15,6 +15,7 @@ import AdminProfileEdit from "./pages/admin/adminProfileEdit";
 import AdminProduk from "./pages/admin/adminProduk";
 import AdminProductDetail from "./components/admin/produk/adminProductDetail";
 import AdminProductEdit from "./components/admin/produk/adminProductEdit";
+import AddProduct from "./components/admin/produk/addProduct";
 
 export const UserContext = createContext({});
 
@@ -111,6 +112,10 @@ function App() {
             <Route
               path="/admin/produk"
               element={adminProtectedElement(<AdminProduk />)}
+            />
+            <Route
+              path="/admin/tambah-produk"
+              element={adminProtectedElement(<AddProduct />)}
             />
             <Route
               path="/admin/produk/:id"

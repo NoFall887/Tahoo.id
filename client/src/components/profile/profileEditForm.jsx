@@ -63,7 +63,7 @@ export default function ProfileEditForm({
 
     formData.append("passwordEdit", passwordEdit);
     formData.append("imgIsChange", imgIsChange.current);
-
+    formData.append("foto", user.foto);
     setIsLoading(true);
     axios
       .put(`http://localhost:5000/update-user/${user.id_profile}`, formData, {

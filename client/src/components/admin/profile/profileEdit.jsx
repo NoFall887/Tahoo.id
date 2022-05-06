@@ -65,7 +65,7 @@ export default function ProfileEdit() {
 
     formData.append("passwordEdit", passwordEdit);
     formData.append("imgIsChange", imgIsChange.current);
-
+    formData.append("foto", user.foto);
     setIsLoading(true);
     axios
       .put(`http://localhost:5000/update-user/${user.id_profile}`, formData, {
@@ -162,6 +162,7 @@ export default function ProfileEdit() {
             value={name}
             name="name"
             onChange={(e) => setName(e.target.value)}
+            required
           />
         </Box>
 
@@ -196,6 +197,7 @@ export default function ProfileEdit() {
               onChange={(e) => setUsername(e.target.value)}
               name="username"
               fullWidth
+              required
             />
           </Grid>
           <Grid item xs={6}>
@@ -209,6 +211,7 @@ export default function ProfileEdit() {
               disabled={!passwordEdit}
               name="password"
               fullWidth
+              required
             />
           </Grid>
           <Grid item xs={6}>
@@ -221,6 +224,7 @@ export default function ProfileEdit() {
               onChange={(e) => setEmail(e.target.value)}
               name="email"
               fullWidth
+              required
             />
           </Grid>
           <Grid item xs={6}>
@@ -235,6 +239,7 @@ export default function ProfileEdit() {
               error={passwordError}
               helperText={passwordHelper}
               fullWidth
+              required
             />
           </Grid>
         </Grid>

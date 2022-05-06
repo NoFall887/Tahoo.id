@@ -15,7 +15,7 @@ export default function Products({ select }) {
         })
         .then((response) => {
           console.log(response);
-          setProducts(response.data);
+          if (response.data.success) return setProducts(response.data.data);
         });
     }
     fetchProducts();

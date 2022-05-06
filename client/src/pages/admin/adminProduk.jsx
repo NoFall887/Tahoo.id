@@ -11,12 +11,14 @@ export default function AdminProduk() {
   useEffect(() => {
     function fetchProducts() {
       axios
-        .get("http://localhost:5000/products", {
+        .get("http://localhost:5000/products-admin", {
           withCredentials: true,
         })
         .then((response) => {
           console.log(response);
-          setProducts(response.data);
+          if (response.data.success) {
+            return setProducts(response.data.data);
+          }
         });
     }
     fetchProducts();

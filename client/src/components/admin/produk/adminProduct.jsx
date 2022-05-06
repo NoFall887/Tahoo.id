@@ -13,9 +13,7 @@ export default function AdminProduct({ productData }) {
   const navigate = useNavigate();
 
   function getDetail() {
-    navigate(`/admin/produk/${productData.id_produk}`, {
-      state: { productData: productData },
-    });
+    navigate(`/admin/produk/${productData.id_produk}`);
   }
 
   return (
