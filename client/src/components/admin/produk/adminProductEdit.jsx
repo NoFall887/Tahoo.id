@@ -1,4 +1,12 @@
-import { Box, Fab, IconButton, Paper, Stack, TextField } from "@mui/material";
+import {
+  Box,
+  Fab,
+  IconButton,
+  Paper,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Admin from "../adminTemplate";
@@ -99,17 +107,19 @@ export default function AdminProductEdit() {
             gap: 1,
           }}
         >
-          <IconButton
-            aria-label="back"
-            size="large"
-            onClick={() =>
-              navigate(`/admin/produk/${product.id_produk}`, {
-                state: { productData: product },
-              })
-            }
-          >
-            <ArrowBackRoundedIcon />
-          </IconButton>
+          <Stack direction={"row"} alignItems="center" spacing={1}>
+            <IconButton
+              aria-label="back"
+              size="large"
+              onClick={() => navigate(`/admin/produk/${product.id_produk}`)}
+            >
+              <ArrowBackRoundedIcon />
+            </IconButton>
+            <Typography variant="h6" component={"h2"}>
+              Edit Produk
+            </Typography>
+          </Stack>
+
           <form
             style={{ display: "flex", gap: 32, width: "100%" }}
             id="product-detail-edit"

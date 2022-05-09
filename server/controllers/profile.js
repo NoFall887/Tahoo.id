@@ -3,7 +3,11 @@ const cloudinary = require("./cloudinaryConf");
 const upload = require("./multer");
 const profileRouter = require("express").Router();
 const streamifier = require("streamifier");
-const { updateUser, updatePassword } = require("../models/userProfile");
+const {
+  updateUser,
+  updatePassword,
+  getUser,
+} = require("../models/userProfile");
 const bcrypt = require("bcrypt");
 
 async function imgUpload(req, res, next) {
@@ -66,4 +70,5 @@ profileRouter.put(
   }
 );
 
+// profileRouter.get();
 module.exports = { profileRouter, imgUpload };

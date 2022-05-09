@@ -17,6 +17,8 @@ import AdminProductDetail from "./components/admin/produk/adminProductDetail";
 import AdminProductEdit from "./components/admin/produk/adminProductEdit";
 import AddProduct from "./components/admin/produk/addProduct";
 
+import AdminOrders from "./pages/admin/adminOrders";
+
 export const UserContext = createContext({});
 
 function App() {
@@ -132,6 +134,10 @@ function App() {
             <Route
               path="/admin/profile/edit"
               element={adminProtectedElement(<AdminProfileEdit />)}
+            />
+            <Route
+              path="/admin/transaksi"
+              element={adminProtectedElement(<AdminOrders />)}
             />
           </Routes>
         </BrowserRouter>

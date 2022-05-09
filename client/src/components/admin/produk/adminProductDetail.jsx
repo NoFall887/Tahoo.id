@@ -1,13 +1,19 @@
-import { Box, Button, IconButton, Paper, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  IconButton,
+  Paper,
+  Stack,
+  Typography,
+} from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Admin from "../adminTemplate";
 import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
 import ModeEditOutlineRoundedIcon from "@mui/icons-material/ModeEditOutlineRounded";
 import axios from "axios";
 import AdminLoading from "../adminLoading";
 import CurrencyText from "../../currencyText";
-import { display } from "@mui/system";
 
 export default function AdminProductDetail() {
   const navigate = useNavigate();
@@ -47,13 +53,19 @@ export default function AdminProductDetail() {
             gap: 1,
           }}
         >
-          <IconButton
-            aria-label="back"
-            size="large"
-            onClick={() => navigate("/admin/produk")}
-          >
-            <ArrowBackRoundedIcon />
-          </IconButton>
+          <Stack direction={"row"} alignItems="center" spacing={1}>
+            <IconButton
+              aria-label="back"
+              size="large"
+              onClick={() => navigate("/admin/produk")}
+            >
+              <ArrowBackRoundedIcon />
+            </IconButton>
+            <Typography variant="h6" component={"h2"}>
+              Detail Produk
+            </Typography>
+          </Stack>
+
           <Box sx={{ display: "flex", gap: 3 }}>
             <Box sx={{ overflow: "visible", flex: 2 }}>
               <img

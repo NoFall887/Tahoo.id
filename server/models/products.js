@@ -8,6 +8,7 @@ function getAllProducts(req, res, next) {
       next();
     }
     req.data = data.rows;
+
     next();
   });
 }

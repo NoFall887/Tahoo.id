@@ -6,25 +6,37 @@ import ListSubheader from "@mui/material/ListSubheader";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import InventoryIcon from "@mui/icons-material/Inventory";
 import { Link } from "react-router-dom";
+import SummarizeRoundedIcon from "@mui/icons-material/SummarizeRounded";
+const listItems = [
+  {
+    link: "/admin",
+    icon: <DashboardIcon />,
+    label: "Dashboard",
+  },
+  {
+    link: "/admin/produk",
+    icon: <InventoryIcon />,
+    label: "Produk",
+  },
+  {
+    link: "/admin/transaksi",
+    icon: <SummarizeRoundedIcon />,
+    label: "Transaksi",
+  },
+];
 
 export const mainListItems = (
   <React.Fragment>
-    <Link to={"/admin"} className="sidebar-button">
-      <ListItemButton>
-        <ListItemIcon>
-          <DashboardIcon />
-        </ListItemIcon>
-        <ListItemText primary="Dashboard" />
-      </ListItemButton>
-    </Link>
-    <Link to={"/admin/produk"} className="sidebar-button">
-      <ListItemButton>
-        <ListItemIcon>
-          <InventoryIcon />
-        </ListItemIcon>
-        <ListItemText primary="Produk" />
-      </ListItemButton>
-    </Link>
+    {listItems.map((val, index) => {
+      return (
+        <Link to={val.link} className="sidebar-button" key={index}>
+          <ListItemButton>
+            <ListItemIcon>{val.icon}</ListItemIcon>
+            <ListItemText primary={val.label} />
+          </ListItemButton>
+        </Link>
+      );
+    })}
   </React.Fragment>
 );
 

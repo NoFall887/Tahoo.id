@@ -12,9 +12,9 @@ const productRoute = require("express").Router();
 
 productRoute.get("/products", getAllProducts, (req, res) => {
   if (req.err) {
-    res.json(req.err);
+    return res.json(req.err);
   }
-  res.json(req.data);
+  res.json({ success: true, data: req.data });
 });
 
 productRoute.get("/products-admin", async (req, res) => {
