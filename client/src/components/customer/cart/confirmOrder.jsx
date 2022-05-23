@@ -4,40 +4,41 @@ import { Button, Row, Col, Spinner } from "react-bootstrap";
 import axios from "axios";
 
 export default function ConfirmOrder({
-  jumlah,
-  userId,
   product,
   setShowConfirm,
   setChangeOrder,
+  setChangeCart,
 }) {
   const [isLoading, setIsLoading] = useState(false);
-  function createOrder() {
+
+  function handleCheckout() {
     setIsLoading(true);
     axios
-      .post(
-        "http://localhost:5000/add-order",
-        {
-          jumlah: jumlah,
-          userId: userId,
-          productId: product.id_produk,
-          harga: product.harga,
-        },
-        { withCredentials: true }
-      )
+      .get("http://localhost:5000/checkout", { withCredentials: true })
       .then((response) => {
         if (response.data.success) {
-          var message = `[Tahoo.id] saya ingin memesan ${
-            product.nama_produk
-          } sebanyak ${jumlah}kg dengan total ${product.harga * jumlah}`;
+          setIsLoading(false);
+          const data = response.data.data;
+          var message = `[Tahoo.id] saya ingin memesan `;
+          data.forEach((val) => {
+            console.log(val);
+            message += `${val.nama} sebanyak ${
+              val.jumlah_produk
+            }kg dengan total ${val.harga_produk * val.jumlah_produk} \n,`;
+          });
           message = encodeURIComponent(message);
           setIsLoading(false);
           setChangeOrder((prev) => !prev);
+          setChangeCart((prev) => !prev);
           setShowConfirm(false);
           window.open(
             `https://api.whatsapp.com/send?phone=6281334089882&text=${message}`,
             "_blank"
           );
+
+          return;
         }
+        return setIsLoading(false);
       });
   }
 
@@ -54,7 +55,11 @@ export default function ConfirmOrder({
           <Button variant="danger" onClick={() => setShowConfirm(false)}>
             Batal
           </Button>
-          <Button variant="success" onClick={createOrder} disabled={isLoading}>
+          <Button
+            variant="success"
+            onClick={handleCheckout}
+            disabled={isLoading}
+          >
             {isLoading ? (
               <Spinner
                 as="span"

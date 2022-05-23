@@ -2,6 +2,7 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { createContext, useEffect, useState } from "react";
 import React from "react";
 import Login from "./pages/login";
+import "gridjs/dist/theme/mermaid.css";
 import Home from "./pages/home";
 import axios from "axios";
 import "/node_modules/bootstrap/dist/js/bootstrap.min.js";
@@ -18,6 +19,7 @@ import AdminProductEdit from "./components/admin/produk/adminProductEdit";
 import AddProduct from "./components/admin/produk/addProduct";
 
 import AdminOrders from "./pages/admin/adminOrders";
+import AdminOrderEdit from "./pages/admin/adminOrderEdit";
 
 export const UserContext = createContext({});
 
@@ -27,7 +29,6 @@ function App() {
   function adminProtectedElement(component) {
     if (user) {
       if (user.is_admin) {
-        console.log(component);
         return component;
       } else {
         return <Navigate to={"/"} replace={true} />;
@@ -42,7 +43,6 @@ function App() {
       axios
         .get("http://localhost:5000/auth/authVerify", { withCredentials: true })
         .then((response) => {
-          console.log(response);
           if (response.data.success === true) {
             return setUser(response.data.user);
           } else {
@@ -138,6 +138,10 @@ function App() {
             <Route
               path="/admin/transaksi"
               element={adminProtectedElement(<AdminOrders />)}
+            />
+            <Route
+              path="/admin/transaksi/:id"
+              element={adminProtectedElement(<AdminOrderEdit />)}
             />
           </Routes>
         </BrowserRouter>

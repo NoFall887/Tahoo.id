@@ -1,11 +1,13 @@
-import React from 'react'
-import Order from './order';
-export default function Orders({orderData, setChangeOrder}) {
+import { Stack } from "@mui/material";
+import React from "react";
+import Order from "./order";
+
+export default function Orders({ orderData, setChangeOrder }) {
   return (
-    <div className='d-grid gap-3'>
+    <Stack spacing={2}>
       {orderData.map((val, index) => {
-        return <Order data={val} key={index} setChangeOrder={setChangeOrder} />
+        return <Order data={val} key={index} setChangeOrder={setChangeOrder} />;
       })}
-    </div>
-  )
+    </Stack>
+  );
 }

@@ -4,7 +4,7 @@ import Loading from "../loading";
 import EmptyOrder from "../order/emptyOrder";
 import Orders from "../order/orders";
 
-export default function OrderTab({ user, changeOrder, setChangeOrder }) {
+const OrderTab = React.memo(({ user, changeOrder, setChangeOrder }) => {
   const [orderData, setOrderData] = useState(null);
   console.log(changeOrder);
   useEffect(() => {
@@ -31,4 +31,6 @@ export default function OrderTab({ user, changeOrder, setChangeOrder }) {
     return <EmptyOrder />;
   }
   return <Orders orderData={orderData} setChangeOrder={setChangeOrder} />;
-}
+});
+
+export default OrderTab;

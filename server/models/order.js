@@ -17,18 +17,17 @@ VALUES ($1, $2, 2, $3, $4)
 async function getOrder(userId) {
   const queryString = `
 SELECT 
-id_pesanan, 
-jumlah_pesanan, 
-tanggal_pemesanan, 
-bukti_transaksi, 
-nama_produk, 
-harga, 
-foto, 
-status_pesanan,
-total
-FROM data_pesanan 
-JOIN produk USING(id_produk)
+id_pesanan,
+bukti_transaksi,
+nama_produk,
+detail_pesanan.harga,
+jumlah,
+foto,
+TO_CHAR(tanggal_pemesanan, 'dd-mm-yyyy') AS tanggal
+FROM data_pesanan
 JOIN status_pesanan USING(id_status_pesanan)
+JOIN detail_pesanan USING(id_pesanan)
+JOIN produk USING(id_produk)
 WHERE id_profile=$1`;
 
   try {
@@ -75,19 +74,60 @@ WHERE id_pesanan=$2`;
 async function getAllOrders() {
   const queryString = `
 SELECT 
-id_pesanan, 
-jumlah_pesanan, 
-tanggal_pemesanan, 
-bukti_transaksi, 
-nama_produk, 
-total
-status_pesanan 
-FROM data_pesanan 
+id_pesanan,
+nama,
+id_status_pesanan,
+TO_CHAR(tanggal_pemesanan, 'dd-mm-yyyy') AS tanggal,
+SUM(detail_pesanan.harga*jumlah)::int AS total
+FROM data_pesanan
+JOIN data_profile USING(id_profile)
+JOIN status_pesanan USING(id_status_pesanan)
+JOIN detail_pesanan USING(id_pesanan)
 JOIN produk USING(id_produk)
-JOIN status_pesanan USING(id_status_pesanan)`;
+GROUP BY 1, 2, 3, 4
+ORDER BY id_pesanan DESC`;
   try {
     const result = await (await pool.query(queryString)).rows;
     return [{ success: true }, ...result];
+  } catch (err) {
+    console.log(err);
+    return err;
+  }
+}
+
+async function getOrderDetail(orderId) {
+  const queryString = `
+SELECT 
+id_pesanan,
+id_status_pesanan,
+nama_produk,
+bukti_transaksi,
+jumlah,
+detail_pesanan.harga,
+TO_CHAR(tanggal_pemesanan, 'dd-mm-yyyy') AS tanggal
+FROM data_pesanan
+JOIN data_profile USING(id_profile)
+JOIN status_pesanan USING(id_status_pesanan)
+JOIN detail_pesanan USING(id_pesanan)
+JOIN produk USING(id_produk)
+WHERE id_pesanan=$1`;
+  try {
+    const result = await (await pool.query(queryString, [orderId])).rows;
+    return [{ success: true }, ...result];
+  } catch (err) {
+    console.log(err);
+    return err;
+  }
+}
+
+async function updateOrderStatus(orderId, status) {
+  const queryString = `
+UPDATE data_pesanan
+SET id_status_pesanan = $2
+WHERE id_pesanan = $1`;
+  try {
+    await pool.query(queryString, [orderId, status]);
+    return { success: true };
   } catch (err) {
     console.log(err);
     return err;
@@ -100,4 +140,6 @@ module.exports = {
   addTransactionProof,
   updateOrder,
   getAllOrders,
+  getOrderDetail,
+  updateOrderStatus,
 };

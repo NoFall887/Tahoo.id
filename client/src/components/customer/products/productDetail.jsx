@@ -6,22 +6,29 @@ import {
   FormControl,
   InputGroup,
   Button,
+  Spinner,
 } from "react-bootstrap";
 import AddCircleOutlineRoundedIcon from "@mui/icons-material/AddCircleOutlineRounded";
 import RemoveCircleOutlineRoundedIcon from "@mui/icons-material/RemoveCircleOutlineRounded";
-import ConfirmOrder from "../order/confirmOrder";
 import CurrencyText from "../../currencyText";
+import axios from "axios";
+import { Snackbar } from "@mui/material";
+import MuiAlert from "@mui/material/Alert";
 
 export default function ProductDetail({
   product,
   select,
   user,
-  setChangeOrder,
+  setChangeCart,
   setActiveKey,
 }) {
   const [jumlah, setJumlah] = useState(1);
   const [total, setTotal] = useState(product.harga * jumlah);
-  const [showConfirm, setShowConfirm] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [show, setShow] = useState(false);
+  const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  });
 
   function handleChange(value) {
     if (parseInt(value) < 1 || value === "") {
@@ -34,20 +41,24 @@ export default function ProductDetail({
 
   function handleSubmit(e) {
     e.preventDefault();
-    setShowConfirm(true);
+    setIsLoading(true);
+    axios
+      .post(
+        `http://localhost:5000/add-cart-item`,
+        {
+          productId: product.id_produk,
+          jumlah: jumlah,
+        },
+        { withCredentials: true }
+      )
+      .then((response) => {
+        if (response.data.success) {
+          setChangeCart((prev) => !prev);
+          setShow(true);
+        }
+        setIsLoading(false);
+      });
   }
-
-  if (showConfirm)
-    return (
-      <ConfirmOrder
-        setAvtiveKey={setActiveKey}
-        setChangeOrder={setChangeOrder}
-        setShowConfirm={setShowConfirm}
-        userId={user.id_profile}
-        product={product}
-        jumlah={jumlah}
-      />
-    );
 
   return (
     <Row className="justify-content-around product-detail">
@@ -100,12 +111,31 @@ export default function ProductDetail({
             <Button variant="outline-danger" onClick={() => select(false)}>
               Kembali
             </Button>
-            <Button variant="secondary" type="submit">
-              Pesan
+            <Button variant="secondary" type="submit" disabled={isLoading}>
+              {isLoading ? (
+                <Spinner
+                  as="span"
+                  animation="border"
+                  size="sm"
+                  role="status"
+                  aria-hidden="true"
+                />
+              ) : (
+                "Pesan"
+              )}
             </Button>
           </div>
         </Form>
       </Col>
+      <Snackbar
+        open={show}
+        autoHideDuration={3000}
+        onClose={() => setShow(false)}
+      >
+        <Alert onClose={() => setShow(false)} severity="success">
+          Ditambahkan ke keranjang!
+        </Alert>
+      </Snackbar>
     </Row>
   );
 }
