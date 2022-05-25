@@ -56,4 +56,18 @@ AND id_keranjang = $3`;
   }
 }
 
-module.exports = { addCart, getCart, checkout, updateCart };
+async function deleteCartItem(productId, cartId) {
+  const queryString = `
+DELETE FROM detail_keranjang
+WHERE id_produk = $1
+AND id_keranjang = $2`;
+  try {
+    await pool.query(queryString, [productId, cartId]);
+    return { success: true };
+  } catch (err) {
+    console.log(err);
+    return err;
+  }
+}
+
+module.exports = { addCart, getCart, checkout, updateCart, deleteCartItem };

@@ -1,4 +1,10 @@
-const { addCart, getCart, checkout, updateCart } = require("../models/cart");
+const {
+  addCart,
+  getCart,
+  checkout,
+  updateCart,
+  deleteCartItem,
+} = require("../models/cart");
 
 const cartRouter = require("express").Router();
 
@@ -40,10 +46,15 @@ cartRouter.get("/checkout", async (req, res) => {
 });
 
 cartRouter.post("/update-cart/:id", (req, res) => {
-  const { oldData } = req.body;
-  req.body.newData.forEach(async (val, index) => {
-    console.log(val.jumlah, oldData[index]);
-    if (val.jumlah !== oldData[index]) {
+  const { oldData, newData } = req.body;
+
+  newData.forEach(async (val, index) => {
+    // console.log(val.jumlah, newData[index]);
+
+    if (val.deleted) {
+      const result = await deleteCartItem(val.id_produk, val.id_keranjang);
+      if (!result.success) return res.json({ success: false });
+    } else if (val.jumlah !== oldData[index].jumlah) {
       const result = await updateCart(
         val.jumlah,
         val.id_produk,

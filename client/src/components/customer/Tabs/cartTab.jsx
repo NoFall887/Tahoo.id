@@ -18,6 +18,7 @@ import Loading from "../loading";
 import ModeEditRoundedIcon from "@mui/icons-material/ModeEditRounded";
 import RemoveCircleOutlineRoundedIcon from "@mui/icons-material/RemoveCircleOutlineRounded";
 import AddCircleOutlineRoundedIcon from "@mui/icons-material/AddCircleOutlineRounded";
+import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import MuiAlert from "@mui/material/Alert";
 
 const CartTab = React.memo(
@@ -51,6 +52,16 @@ const CartTab = React.memo(
         });
     }
 
+    function deleteRow(index) {
+      setCart((prevCart) => {
+        let temp = [...prevCart];
+        temp[index].deleted = true;
+        temp[index].total = 0;
+        updateTotal(temp);
+        return temp;
+      });
+    }
+
     function updateTotal(data) {
       total.current = 0;
       data.forEach((val) => {
@@ -59,23 +70,21 @@ const CartTab = React.memo(
     }
 
     function setTemp() {
-      let temp = [];
-      cart.forEach((val) => {
-        temp.push(val.jumlah);
-      });
-      setTempCart(temp);
+      setTempCart(
+        cart.map((val) => {
+          return { ...val };
+        })
+      );
     }
 
     function revertChanges() {
-      setCart((prevCart) => {
-        let temp = [...prevCart];
-        temp.forEach((val, index) => {
-          val.jumlah = tempCart[index];
-          val.total = val.jumlah * val.harga;
-        });
-        updateTotal(temp);
-        return temp;
-      });
+      setCart(
+        tempCart.map((val) => {
+          return { ...val };
+        })
+      );
+      updateTotal(tempCart);
+      setTempCart(null);
     }
 
     function handleChange(value, index) {
@@ -188,6 +197,7 @@ const CartTab = React.memo(
         <Table sx={{ width: "100%" }} aria-label="cart table">
           <TableBody>
             {cart.map((val, index) => {
+              if (val.deleted) return;
               return (
                 <TableRow key={index} sx={{ "& td": { fontSize: "16px" } }}>
                   <TableCell>{val.nama_produk}</TableCell>
@@ -227,6 +237,13 @@ const CartTab = React.memo(
                   <TableCell align="right">
                     <CurrencyText value={val.total} />
                   </TableCell>
+                  {onEdit && (
+                    <TableCell>
+                      <Button variant="danger" onClick={() => deleteRow(index)}>
+                        <DeleteRoundedIcon />
+                      </Button>
+                    </TableCell>
+                  )}
                 </TableRow>
               );
             })}
