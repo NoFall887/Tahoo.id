@@ -1,10 +1,11 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Button, Spinner } from "react-bootstrap";
+import { orderEditContext } from "./order";
 
 export default function BuktiPembayaranBtn({ data, setChangeOrder, setShow }) {
   const [isLoading, setIsLoading] = useState(false);
-
+  const { onEdit } = useContext(orderEditContext);
   function handleImgUpload(e) {
     var file = e.target.files[0];
     const formData = new FormData();
@@ -13,7 +14,7 @@ export default function BuktiPembayaranBtn({ data, setChangeOrder, setShow }) {
     formData.append("orderId", data[0].id_pesanan);
     setIsLoading(true);
     axios
-      .post("http://localhost:5000/bukti-transaksi", formData, {
+      .post("/bukti-transaksi", formData, {
         withCredentials: true,
       })
       .then((response) => {
@@ -28,7 +29,8 @@ export default function BuktiPembayaranBtn({ data, setChangeOrder, setShow }) {
     return (
       <label
         className={
-          "btn btn-secondary order-proof-btn" + (isLoading ? " disabled" : "")
+          "btn btn-secondary order-proof-btn" +
+          (isLoading || onEdit ? " disabled" : "")
         }
       >
         <input
@@ -59,6 +61,7 @@ export default function BuktiPembayaranBtn({ data, setChangeOrder, setShow }) {
       variant="secondary"
       onClick={() => setShow(true)}
       className="py-2 order-proof-btn"
+      disabled={onEdit}
     >
       Tampilkan bukti transaksi
     </Button>

@@ -44,7 +44,7 @@ export default function ProductDetail({
     setIsLoading(true);
     axios
       .post(
-        `http://localhost:5000/add-cart-item`,
+        `/add-cart-item`,
         {
           productId: product.id_produk,
           jumlah: jumlah,

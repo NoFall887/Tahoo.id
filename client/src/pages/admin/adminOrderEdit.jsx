@@ -30,7 +30,7 @@ export default function AdminOrderEdit() {
   useEffect(() => {
     function fetchData() {
       axios
-        .get(`http://localhost:5000/admin/get-order-detail/${id}`, {
+        .get(`/admin/get-order-detail/${id}`, {
           withCredentials: true,
         })
         .then((response) => {
@@ -57,7 +57,7 @@ export default function AdminOrderEdit() {
   return (
     <Admin>
       <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 2 }}>
-        <IconButton size="large" onClick={() => navigate("/admin/transaksi")}>
+        <IconButton size="large" onClick={() => navigate("/admin/pesanan")}>
           <ArrowBackRoundedIcon fontSize="inherit" />
         </IconButton>
         <Typography component={"h2"} variant={"h5"}>

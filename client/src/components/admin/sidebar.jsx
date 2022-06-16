@@ -3,7 +3,7 @@ import React, { useContext } from "react";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import IconButton from "@mui/material/IconButton";
 import { drawerWidth } from "./adminTemplate";
-import { mainListItems, secondaryListItems } from "./listItem";
+import ListItem from "./listItem";
 import MuiDrawer from "@mui/material/Drawer";
 import { UserContext } from "../../App";
 
@@ -55,7 +55,9 @@ export default function Sidebar() {
         </IconButton>
       </Toolbar>
       <Divider />
-      <List component="nav">{mainListItems}</List>
+      <List component="nav">
+        <ListItem />
+      </List>
     </Drawer>
   );
 }

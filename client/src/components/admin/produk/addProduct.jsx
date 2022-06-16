@@ -1,5 +1,5 @@
 import { Box, Fab, IconButton, Paper, Stack, TextField } from "@mui/material";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Admin from "../adminTemplate";
 import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
@@ -47,7 +47,7 @@ export default function AddProduct() {
 
     setIsLoading(true);
     axios
-      .post(`http://localhost:5000/add-product`, formData, {
+      .post(`/add-product`, formData, {
         headers: { "content-type": "multipart/form-data" },
         withCredentials: true,
       })

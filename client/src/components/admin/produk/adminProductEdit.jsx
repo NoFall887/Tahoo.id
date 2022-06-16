@@ -31,7 +31,7 @@ export default function AdminProductEdit() {
   useEffect(() => {
     function fetchProducts() {
       axios
-        .get(`http://localhost:5000/products-admin/${id}`, {
+        .get(`/products-admin/${id}`, {
           withCredentials: true,
         })
         .then((response) => {
@@ -80,7 +80,7 @@ export default function AdminProductEdit() {
     formData.append("foto", product.foto);
     setIsLoading(true);
     axios
-      .put(`http://localhost:5000/edit-product/${id}`, formData, {
+      .put(`/edit-product/${id}`, formData, {
         headers: { "content-type": "multipart/form-data" },
         withCredentials: true,
       })

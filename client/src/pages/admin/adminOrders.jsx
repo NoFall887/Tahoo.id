@@ -1,7 +1,6 @@
 import { IconButton } from "@mui/material";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import Admin from "../../components/admin/adminTemplate";
-import AdminEmptyOrders from "../../components/admin/orders/adminEmptyOrders";
 import { _ } from "gridjs-react";
 import { Grid } from "gridjs";
 import { Badge } from "react-bootstrap";
@@ -12,12 +11,11 @@ import axios from "axios";
 
 export default function AdminOrders() {
   const navigate = useNavigate();
-  const [orders, setOrders] = useState(true);
+
   const tableCont = useRef(null);
 
   useEffect(() => {
     const grid = new Grid({
-      style: {},
       columns: [
         "ID",
         "Pemesan",
@@ -52,13 +50,14 @@ export default function AdminOrders() {
       ],
       sort: true,
       server: {
-        url: "http://localhost:5000/admin/get-all-orders",
+        url: "/admin/get-all-orders",
         data: (opts) => {
           return new Promise((resolve, reject) => {
             axios.get(opts.url, { withCredentials: true }).then((response) => {
               if (!response.data.success) return reject();
               const respData = response.data.data;
-              if (respData === 0) return setOrders([]);
+              console.log(respData);
+
               resolve({
                 data: respData.map((row) => {
                   return [
@@ -82,7 +81,7 @@ export default function AdminOrders() {
                       <IconButton
                         color="primary"
                         onClick={() => {
-                          navigate(`/admin/transaksi/${row.id_pesanan}`);
+                          navigate(`/admin/pesanan/${row.id_pesanan}`);
                         }}
                       >
                         <ArrowForwardIosRoundedIcon />
@@ -96,18 +95,11 @@ export default function AdminOrders() {
         },
       },
     });
-    if (orders === true) grid.render(tableCont.current);
-  }, [orders, navigate]);
-
-  if (orders.length === 0)
-    return (
-      <Admin>
-        <AdminEmptyOrders />
-      </Admin>
-    );
+    grid.render(tableCont.current);
+  }, [navigate]);
 
   return (
-    <Admin>
+    <Admin sx={{ "& .gridjs-table": { width: "100%" } }}>
       <div id="table-cont" ref={tableCont} />
     </Admin>
   );

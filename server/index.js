@@ -12,6 +12,7 @@ const productRoute = require("./controllers/product");
 const { profileRouter } = require("./controllers/profile");
 const orderRoute = require("./controllers/order");
 const { cartRouter } = require("./controllers/cart");
+const { revenueRoute } = require("./controllers/revenue");
 
 dotenv.config();
 app.use(express.json());
@@ -46,6 +47,7 @@ app.use("/", productRoute);
 app.use("/", profileRouter);
 app.use("/", orderRoute);
 app.use("/", cartRouter);
+app.use("/", revenueRoute);
 const listener = app.listen(process.env.PORT || 5000, () => {
   console.log("server running on port " + listener.address().port);
 });

@@ -109,9 +109,19 @@ orderRoute.post("/admin/update-order-status/:id", async (req, res) => {
 });
 
 orderRoute.put("/update-order", async (req, res) => {
-  const result = await updateOrder(req.body.orderId, req.body.jumlah);
-  if (result === "success") return res.json({ success: true });
-  res.json({ success: false });
+  const { data } = req.body;
+  for (let item of data) {
+    console.log(item);
+    const result = await updateOrder(
+      item.jumlah,
+      item.id_pesanan,
+      item.id_produk
+    );
+    if (!result.success) {
+      return res.json({ success: false });
+    }
+  }
+  return res.json({ success: true });
 });
 
 module.exports = orderRoute;

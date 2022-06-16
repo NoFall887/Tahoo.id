@@ -49,8 +49,6 @@ cartRouter.post("/update-cart/:id", (req, res) => {
   const { oldData, newData } = req.body;
 
   newData.forEach(async (val, index) => {
-    // console.log(val.jumlah, newData[index]);
-
     if (val.deleted) {
       const result = await deleteCartItem(val.id_produk, val.id_keranjang);
       if (!result.success) return res.json({ success: false });

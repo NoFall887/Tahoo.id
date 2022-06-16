@@ -18,6 +18,8 @@ async function getOrder(userId) {
   const queryString = `
 SELECT 
 id_pesanan,
+id_status_pesanan,
+id_produk,
 bukti_transaksi,
 nama_produk,
 detail_pesanan.harga,
@@ -57,15 +59,21 @@ WHERE id_pesanan=$2`;
   }
 }
 
-async function updateOrder(orderId, jumlah) {
+async function updateOrder(jumlah, orderId, productId) {
+  console.log(jumlah, orderId, productId);
   const queryString = `
-UPDATE data_pesanan
-SET jumlah_pesanan=$1
-WHERE id_pesanan=$2`;
+UPDATE detail_pesanan
+SET jumlah=$1
+WHERE id_pesanan=$2
+AND id_produk=$3`;
   try {
-    await pool.query(queryString, [parseInt(jumlah), parseInt(orderId)]);
-    return "success";
-  } catch {
+    await pool.query(queryString, [
+      parseInt(jumlah),
+      parseInt(orderId),
+      parseInt(productId),
+    ]);
+    return { success: true };
+  } catch (err) {
     console.log(err);
     return err;
   }
@@ -121,12 +129,13 @@ WHERE id_pesanan=$1`;
 }
 
 async function updateOrderStatus(orderId, status) {
-  const queryString = `
+  const queryStringCart = `
 UPDATE data_pesanan
 SET id_status_pesanan = $2
 WHERE id_pesanan = $1`;
+
   try {
-    await pool.query(queryString, [orderId, status]);
+    await pool.query(queryStringCart, [orderId, status]);
     return { success: true };
   } catch (err) {
     console.log(err);

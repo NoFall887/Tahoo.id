@@ -38,7 +38,7 @@ const CartTab = React.memo(
       setIsloading(true);
       axios
         .post(
-          `http://localhost:5000/update-cart/${cart[0].id_keranjang}`,
+          `/update-cart/${cart[0].id_keranjang}`,
           { newData: cart, oldData: tempCart },
           { withCredentials: true }
         )
@@ -115,14 +115,14 @@ const CartTab = React.memo(
     useEffect(() => {
       function fetchCart() {
         axios
-          .get(`http://localhost:5000/cart`, {
+          .get(`/cart`, {
             withCredentials: true,
           })
           .then((response) => {
             if (response.data.success) {
               console.log(response.data.data);
-              setCart(response.data.data);
               updateTotal(response.data.data);
+              setCart(response.data.data);
             }
           });
       }

@@ -53,12 +53,12 @@ export default function AdminNavbar() {
   function handleLogout() {
     setLoading(true);
     axios
-      .post("http://localhost:5000/auth/logout", {}, { withCredentials: true })
+      .post("/auth/logout", {}, { withCredentials: true })
       .then((response) => {
         if (response.data.success === true) {
-          setUser(false);
           setAnchorElUser(null);
           setLoading(false);
+          setUser(false);
           navigate("/login");
         }
       });
@@ -76,7 +76,8 @@ export default function AdminNavbar() {
           </Typography>
         </Stack>
       </Backdrop>
-      <AppBar position="fixed" open={open}>
+
+      <AppBar position="absolute" open={open}>
         <Toolbar>
           <IconButton
             color="inherit"

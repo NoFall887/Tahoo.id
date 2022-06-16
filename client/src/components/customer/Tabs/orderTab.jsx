@@ -11,7 +11,7 @@ const OrderTab = React.memo(({ user, changeOrder, setChangeOrder }) => {
     function fetchOrder() {
       console.log("exec");
       axios
-        .get(`http://localhost:5000/get-order/${user.id_profile}`, {
+        .get(`/get-order/${user.id_profile}`, {
           withCredentials: true,
         })
         .then((response) => {

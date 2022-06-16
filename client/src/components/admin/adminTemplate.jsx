@@ -6,9 +6,9 @@ import Sidebar from "./sidebar";
 
 export const drawerWidth = 240;
 
-export default function Admin({ children }) {
+export default function Admin({ children, sx }) {
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ minHeight: "100vh", display: "flex", ...sx }}>
       <CssBaseline />
       <AdminNavbar />
       <Sidebar />

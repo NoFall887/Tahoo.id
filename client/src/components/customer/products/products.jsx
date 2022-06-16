@@ -10,7 +10,7 @@ export default function Products({ select }) {
   useEffect(() => {
     function fetchProducts() {
       axios
-        .get("http://localhost:5000/products", {
+        .get("/products", {
           withCredentials: true,
         })
         .then((response) => {

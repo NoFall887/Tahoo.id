@@ -11,7 +11,7 @@ export default function AdminProduk() {
   useEffect(() => {
     function fetchProducts() {
       axios
-        .get("http://localhost:5000/products-admin", {
+        .get("/products-admin", {
           withCredentials: true,
         })
         .then((response) => {

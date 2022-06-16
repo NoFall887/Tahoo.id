@@ -23,7 +23,7 @@ export default function OrderStatus({ id, statusData }) {
     setIsLoading(true);
     axios
       .post(
-        `http://localhost:5000/admin/update-order-status/${id}`,
+        `/admin/update-order-status/${id}`,
         { status: status },
         { withCredentials: true }
       )

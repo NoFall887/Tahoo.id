@@ -68,7 +68,7 @@ export default function ProfileEdit() {
     formData.append("foto", user.foto);
     setIsLoading(true);
     axios
-      .put(`http://localhost:5000/update-user/${user.id_profile}`, formData, {
+      .put(`/update-user/${user.id_profile}`, formData, {
         headers: { "content-type": "multipart/form-data" },
         withCredentials: true,
       })

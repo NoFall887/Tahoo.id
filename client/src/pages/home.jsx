@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Container, Tabs, Tab, Row } from "react-bootstrap";
+import HomeCarousel from "../components/customer/carousel";
 import NavbarCustom from "../components/customer/navbar";
 import CartTab from "../components/customer/Tabs/cartTab";
 import OrderTab from "../components/customer/Tabs/orderTab";
@@ -23,7 +24,7 @@ function Home({ user, setUser }) {
         <Row className="shadow align-items-center m-5 rounded-3" id="main-tabs">
           <Tabs defaultActiveKey="Beranda">
             <Tab eventKey="Beranda" title="Beranda">
-              <div>lorem</div>
+              <HomeCarousel />
             </Tab>
             <Tab eventKey="Produk" title="Produk">
               <ProductTab

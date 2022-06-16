@@ -13,33 +13,31 @@ export default function ConfirmOrder({
 
   function handleCheckout() {
     setIsLoading(true);
-    axios
-      .get("http://localhost:5000/checkout", { withCredentials: true })
-      .then((response) => {
-        if (response.data.success) {
-          setIsLoading(false);
-          const data = response.data.data;
-          var message = `[Tahoo.id] saya ingin memesan `;
-          data.forEach((val) => {
-            console.log(val);
-            message += `${val.nama} sebanyak ${
-              val.jumlah_produk
-            }kg dengan total ${val.harga_produk * val.jumlah_produk} \n,`;
-          });
-          message = encodeURIComponent(message);
-          setIsLoading(false);
-          setChangeOrder((prev) => !prev);
-          setChangeCart((prev) => !prev);
-          setShowConfirm(false);
-          window.open(
-            `https://api.whatsapp.com/send?phone=6281334089882&text=${message}`,
-            "_blank"
-          );
+    axios.get("/checkout", { withCredentials: true }).then((response) => {
+      if (response.data.success) {
+        setIsLoading(false);
+        const data = response.data.data;
+        var message = `[Tahoo.id] saya ingin memesan `;
+        data.forEach((val) => {
+          console.log(val);
+          message += `${val.nama} sebanyak ${
+            val.jumlah_produk
+          }kg dengan total ${val.harga_produk * val.jumlah_produk} \n,`;
+        });
+        message = encodeURIComponent(message);
+        setIsLoading(false);
+        setChangeOrder((prev) => !prev);
+        setChangeCart((prev) => !prev);
+        setShowConfirm(false);
+        window.open(
+          `https://api.whatsapp.com/send?phone=6281334089882&text=${message}`,
+          "_blank"
+        );
 
-          return;
-        }
-        return setIsLoading(false);
-      });
+        return;
+      }
+      return setIsLoading(false);
+    });
   }
 
   return (
