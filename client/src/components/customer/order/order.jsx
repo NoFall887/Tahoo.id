@@ -68,6 +68,7 @@ export default function Order({ data, setChangeOrder }) {
           sx={{
             display: "flex",
             borderBottom: "1px solid black",
+            alignItems: "center",
             padding: 2,
           }}
         >
@@ -80,6 +81,9 @@ export default function Order({ data, setChangeOrder }) {
               {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
             </IconButton>
           </Box>
+          <Typography marginLeft={2} variant="body" component={"span"}>
+            {data[0].tanggal}
+          </Typography>
           {onEdit ? (
             <Box sx={{ marginLeft: "auto" }}>
               <Button

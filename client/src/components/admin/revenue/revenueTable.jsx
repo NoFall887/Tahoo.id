@@ -1,65 +1,109 @@
+import { IconButton } from "@mui/material";
 import axios from "axios";
 import { Grid } from "gridjs";
 import { _ } from "gridjs-react";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import CurrencyText from "../../currencyText";
+import EditRoundedIcon from "@mui/icons-material/EditRounded";
+import RevenueEdit from "./revenueEdit";
+export default function RevenueTable({ date, setResumeData }) {
+  const isFirst = useRef(true);
+  const dataOnEdit = useRef({});
+  const [open, setOpen] = useState(false);
+  console.log(open);
+  var grid = new Grid({
+    columns: [
+      "No",
+      "Waktu",
+      { name: "Keterangan", sort: false },
+      "jumlah",
+      {
+        name: "Total",
+        sort: {
+          compare: (a, b) => {
+            const getValue = (elem) => elem.props.element.props.value;
 
-export default function RevenueTable({ date, setTotal }) {
-  const tableCont = useRef(null);
-
-  useEffect(() => {
-    document.getElementById("table").innerHTML = "";
-
-    let grid = new Grid({
-      columns: [
-        "No",
-        { name: "Keterangan", sort: false },
-        "jumlah",
-        {
-          name: "Total",
-          sort: {
-            compare: (a, b) => {
-              const getValue = (elem) => elem.props.element.props.value;
-
-              if (getValue(a) > getValue(b)) {
-                return 1;
-              } else if (getValue(b) > getValue(a)) {
-                return -1;
-              } else {
-                return 0;
-              }
-            },
+            if (getValue(a) > getValue(b)) {
+              return 1;
+            } else if (getValue(b) > getValue(a)) {
+              return -1;
+            } else {
+              return 0;
+            }
           },
         },
-      ],
-      sort: true,
-      server: {
-        url: `/admin/get-revenue/${date}`,
-        data: (opts) => {
-          return new Promise((resolve, reject) => {
-            axios.get(opts.url, { withCredentials: true }).then((response) => {
-              if (!response.data.success) return reject();
-              const respData = response.data.data.data;
-              console.log(respData);
-              setTotal(response.data.data.total);
-              resolve({
-                data: respData.map((row, index) => {
-                  return [
-                    index + 1,
-                    row.nama_produk,
-                    row.jumlah,
-                    _(<CurrencyText value={row.total} />),
-                  ];
-                }),
-              });
-            });
-          });
-        },
       },
+      { name: "", id: "action-btn" },
+    ],
+
+    sort: true,
+    server: {
+      url: `/admin/revenue/${date}`,
+      data: getData,
+    },
+  });
+  function getData(opts) {
+    return new Promise((resolve, reject) => {
+      axios.get(opts.url, { withCredentials: true }).then((response) => {
+        if (!response.data.success) return reject();
+        const respData = response.data.data;
+        if (isFirst.current) {
+          setResumeData(respData);
+          isFirst.current = false;
+        }
+
+        console.log(respData);
+
+        resolve({
+          data: respData.map((row, index) => {
+            return [
+              index + 1,
+              new Date(row.tanggal).toLocaleTimeString("en-US", {
+                hour12: false,
+              }),
+              row.nama_produk,
+              row.jumlah,
+
+              _(<CurrencyText value={row.total} />),
+              _(
+                <IconButton
+                  color="primary"
+                  onClick={() => {
+                    dataOnEdit.current = row;
+                    setOpen((val) => !val);
+                  }}
+                >
+                  <EditRoundedIcon />
+                </IconButton>
+              ),
+            ];
+          }),
+        });
+      });
     });
+  }
 
-    grid.render(tableCont.current);
-  }, [date, setTotal]);
+  useEffect(() => {
+    document.getElementById("table-revenue").innerHTML = "";
+    grid.render(document.getElementById("table-revenue"));
+    grid.forceRender();
+    isFirst.current = true;
+  }, [date]);
 
-  return <div id="table" ref={tableCont} />;
+  return (
+    <>
+      <div id="table-revenue" />
+      <RevenueEdit
+        data={dataOnEdit.current}
+        open={open}
+        setOpen={setOpen}
+        renderGrid={() => {
+          document.getElementById("table-revenue").innerHTML = "";
+          grid.render(document.getElementById("table-revenue"));
+          grid.forceRender();
+          isFirst.current = true;
+        }}
+      />
+    </>
+  );
 }

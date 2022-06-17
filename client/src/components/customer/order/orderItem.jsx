@@ -19,7 +19,6 @@ export default function OrderItem({ itemData, index }) {
   }
 
   function handleChange(value, index) {
-    // console.log(tempData);
     setTempData((prevData) => {
       const data = prevData[index + 1];
       if (parseInt(value) < 0 || value === "") {
