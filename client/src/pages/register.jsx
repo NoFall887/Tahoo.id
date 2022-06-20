@@ -14,7 +14,7 @@ function Register({ setUser }) {
   function handleSubmit(e) {
     setIsLoading(true);
     e.preventDefault();
-    if (password === passValidation) {
+    if (password === passValidation && password.length >= 8) {
       axios
         .post(
           "/auth/register",
@@ -36,6 +36,8 @@ function Register({ setUser }) {
           }
           setIsLoading(false);
         });
+    } else if (password.length < 8) {
+      alert("Password minimal 8 karakter");
     } else {
       alert("konfirmasi password tidak sesuai");
     }

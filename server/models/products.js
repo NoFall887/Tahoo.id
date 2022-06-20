@@ -28,6 +28,9 @@ async function getProduct(id) {
   const queryString = "SELECT * FROM produk WHERE id_produk=$1";
   try {
     const res = await pool.query(queryString, [parseInt(id)]);
+    if (!res.rows[0]) {
+      return [{ success: false }];
+    }
     return [{ success: true }, res.rows[0]];
   } catch (err) {
     console.log(err);

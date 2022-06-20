@@ -29,7 +29,6 @@ const listItems = [
 
 export default function ListItem() {
   const location = useLocation();
-  console.log(location);
 
   return (
     <React.Fragment>

@@ -19,6 +19,7 @@ productRoute.get("/products", getAllProducts, (req, res) => {
 
 productRoute.get("/products-admin", async (req, res) => {
   const result = await getAdminProducts();
+
   if (result[0].success) {
     return res.json({ success: true, data: result.slice(1) });
   }
@@ -29,6 +30,7 @@ productRoute.get("/products-admin/:productId", async (req, res) => {
   const id = req.params.productId;
 
   const result = await getProduct(id);
+
   if (result[0].success) {
     return res.json({ success: true, data: result[1] });
   }

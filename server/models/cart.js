@@ -5,7 +5,7 @@ async function addCart(userId, productId, jumlah) {
 select * from add_cart_item($1, $2, $3);`;
   try {
     await pool.query(queryString, [userId, productId, jumlah]);
-    return "success";
+    return { success: true };
   } catch (err) {
     console.log(err);
     return err;
@@ -25,6 +25,7 @@ WHERE id_profile=$1
     return [{ success: true }, ...result];
   } catch (err) {
     console.log(err, "getCart");
+
     return err;
   }
 }

@@ -20,14 +20,14 @@ import LoadingButton from "@mui/lab/LoadingButton";
 export default function AdminProductEdit() {
   const navigate = useNavigate();
   const id = parseInt(useParams().id);
-  const [product, setProduct] = useState(null);
-  const [nama, setNama] = useState(null);
-  const [deskripsi, setDeskripsi] = useState(null);
-  const [profileImage, setProfileImage] = useState(null);
+  const [product, setProduct] = useState("");
+  const [nama, setNama] = useState("");
+  const [deskripsi, setDeskripsi] = useState("");
+  const [profileImage, setProfileImage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [harga, setHarga] = useState(0);
   var imgIsChange = useRef(false);
-
+  console.log(deskripsi);
   useEffect(() => {
     function fetchProducts() {
       axios
@@ -36,19 +36,21 @@ export default function AdminProductEdit() {
         })
         .then((response) => {
           if (response.data.success) {
-            setProduct(response.data.data);
+            return setProduct(response.data.data);
           }
         });
     }
     fetchProducts();
   }, [id]);
-
+  function deepCopyString(str) {
+    return (" " + str).slice(1);
+  }
   useEffect(() => {
     if (product === null) return;
-    setNama(product.nama_produk);
-    setDeskripsi(product.deskripsi);
-    setProfileImage(product.foto);
-    setHarga(product.harga);
+    setNama(deepCopyString(product.nama_produk));
+    setDeskripsi(deepCopyString(product.deskripsi));
+    setProfileImage(deepCopyString(product.foto));
+    setHarga(parseInt(product.harga));
     return;
   }, [product]);
 
@@ -96,7 +98,7 @@ export default function AdminProductEdit() {
 
   return (
     <Admin>
-      {product && nama && deskripsi && profileImage && harga ? (
+      {product ? (
         <Paper
           elevation={3}
           sx={{
@@ -182,7 +184,10 @@ export default function AdminProductEdit() {
                   label="Nama produk"
                   value={nama}
                   fullWidth
-                  onChange={(e) => setNama(e.target.value)}
+                  onChange={(e) => {
+                    console.log(e.target.value);
+                    setNama(e.target.value);
+                  }}
                 />
 
                 <TextField

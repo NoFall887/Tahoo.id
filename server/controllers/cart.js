@@ -14,7 +14,7 @@ cartRouter.post("/add-cart-item", async (req, res) => {
     req.body.productId,
     req.body.jumlah
   );
-  if (result === "success") {
+  if (result.success === true) {
     return res.json({ success: true });
   }
   return res.json({ success: false });

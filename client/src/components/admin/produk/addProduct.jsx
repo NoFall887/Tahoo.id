@@ -18,7 +18,7 @@ export default function AddProduct() {
   const [isLoading, setIsLoading] = useState(false);
   const [harga, setHarga] = useState(1);
   var imgIsChange = useRef(false);
-
+  console.log(nama);
   function handleChange(value) {
     if (parseInt(value) < 1 || value === "") {
       setHarga(1);

@@ -22,6 +22,7 @@ import AdminOrders from "./pages/admin/adminOrders";
 import AdminOrderEdit from "./pages/admin/adminOrderEdit";
 import AdminRevenue from "./pages/admin/adminRevenue";
 import AddRevenue from "./pages/admin/addRevenue";
+import Loading from "./components/loading";
 
 axios.defaults.baseURL = "http://localhost:5000";
 export const UserContext = createContext({});
@@ -32,6 +33,7 @@ function App() {
 
   // open admin menu state
   const [open, setOpen] = useState(true);
+
   function adminProtectedElement(component) {
     if (user) {
       if (user.is_admin) {
@@ -61,7 +63,7 @@ function App() {
   }, []);
 
   if (user === null) {
-    return <div></div>;
+    return <Loading />;
   }
 
   return (

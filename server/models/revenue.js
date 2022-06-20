@@ -21,7 +21,7 @@ GROUP BY 1, 2`;
     return [{ success: true }, ...result];
   } catch (err) {
     console.log(err);
-    return err;
+    return [{ success: false }];
   }
 }
 
@@ -41,7 +41,7 @@ async function getRevenue(date) {
     return [{ success: true }, ...result];
   } catch (err) {
     console.log(err);
-    return err;
+    return [{ success: false }];
   }
 }
 
