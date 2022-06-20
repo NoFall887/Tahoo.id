@@ -48,7 +48,10 @@ export default function RevenueTable({ date, setResumeData }) {
         if (!response.data.success) return reject();
         const respData = response.data.data;
         if (isFirst.current) {
-          setResumeData(respData);
+          setResumeData((data) => {
+            data[1] = respData;
+            return [...data];
+          });
           isFirst.current = false;
         }
 

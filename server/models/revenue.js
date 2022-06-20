@@ -5,7 +5,7 @@ async function getDoneOrder(date) {
 SELECT
 nama_produk,
 TO_CHAR(tanggal_pemesanan, 'dd-mm-yyyy') AS tanggal,
-SUM(jumlah) AS jumlah,
+SUM(jumlah)::int AS jumlah,
 SUM(detail_pesanan.harga*jumlah)::int AS total
 FROM data_pesanan
 JOIN data_profile USING(id_profile)

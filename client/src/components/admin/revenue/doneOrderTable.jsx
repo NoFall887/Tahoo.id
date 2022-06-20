@@ -15,9 +15,12 @@ export default function DoneOrderTable({ date, setResumeData }) {
         axios.get(opts.url, { withCredentials: true }).then((response) => {
           if (!response.data.success) return reject();
           const respData = response.data.data;
-          console.log(respData);
+
           if (isFirst.current) {
-            setResumeData(respData);
+            setResumeData((data) => {
+              data[0] = respData;
+              return [...data];
+            });
             isFirst.current = false;
           }
           resolve({

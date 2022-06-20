@@ -1,5 +1,5 @@
 import { Box, Fab, Paper, TextField, Typography } from "@mui/material";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Admin from "../../components/admin/adminTemplate";
 import moment from "moment";
 import { DatePicker } from "@mui/x-date-pickers";
@@ -16,23 +16,36 @@ export default function AdminRevenue() {
   const [resumeData, setResumeData] = useState([]);
   const navigate = useNavigate();
 
-  function updateResumeData(newData) {
-    setResumeData((oldData) => {
-      newData.forEach((data) => {
-        let dataIndex = oldData.findIndex(
-          (val) => val.nama_produk === data.nama_produk
-        );
-        if (dataIndex === -1) {
-          oldData.push(data);
-        } else {
-          oldData[dataIndex].jumlah += data.jumlah;
-          oldData[dataIndex].total += data.total;
-        }
-        total.current += data.total;
+  useEffect(() => {
+    setResumeData([]);
+  }, [date]);
+
+  const preparedData = useRef([]);
+
+  useEffect(() => {
+    function prepareData() {
+      preparedData.current = [];
+      resumeData.forEach((dataSource) => {
+        dataSource.forEach((dataItem) => {
+          // console.log(dataItem, "source");
+          let dataIndex = preparedData.current.findIndex(
+            (val) => val.nama_produk === dataItem.nama_produk
+          );
+
+          if (dataIndex === -1) {
+            preparedData.current.push(dataItem);
+          } else {
+            preparedData.current[dataIndex].jumlah += dataItem.jumlah;
+            preparedData.current[dataIndex].total += dataItem.total;
+          }
+          // console.log(preparedData, "source");
+          total.current += dataItem.total;
+        });
       });
-      return [...oldData];
-    });
-  }
+    }
+    prepareData();
+  }, [resumeData]);
+  console.log(preparedData, "prep");
 
   return (
     <Admin sx={{ "& .gridjs-table": { width: "100%" } }}>
@@ -69,15 +82,15 @@ export default function AdminRevenue() {
         <Typography component={"h6"} variant="body1">
           Data Pesanan
         </Typography>
-        <DoneOrderTable date={date} setResumeData={updateResumeData} />
+        <DoneOrderTable date={date} setResumeData={setResumeData} />
         <Typography component={"h6"} variant="body1">
           Data Catatan
         </Typography>
-        <RevenueTable date={date} setResumeData={updateResumeData} />
+        <RevenueTable date={date} setResumeData={setResumeData} />
         <Typography component={"h6"} variant="body1">
           Total
         </Typography>
-        <ResumeTable data={resumeData} />
+        <ResumeTable key={resumeData} data={preparedData.current} />
         <Fab
           size="large"
           color="secondary"

@@ -116,6 +116,7 @@ export default function ProfileEditForm({
               onChange={(e) => setName(e.target.value)}
               type="text"
               placeholder="nama"
+              required
             />
           </Form.Group>
 
@@ -127,6 +128,7 @@ export default function ProfileEditForm({
               onChange={(e) => setUsername(e.target.value)}
               type="text"
               placeholder="username"
+              required
             />
           </Form.Group>
 
@@ -138,6 +140,7 @@ export default function ProfileEditForm({
               onChange={(e) => setEmail(e.target.value)}
               type="email"
               placeholder="name@example.com"
+              required
             />
           </Form.Group>
 

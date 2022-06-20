@@ -6,6 +6,7 @@ import CurrencyText from "../../currencyText";
 export default function ResumeTable({ data }) {
   const tableCont = useRef(null);
   console.log(data);
+
   useEffect(() => {
     document.getElementById("table-resume").innerHTML = "";
     let grid = new Grid({
