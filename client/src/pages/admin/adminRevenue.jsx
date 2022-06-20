@@ -13,39 +13,38 @@ import ResumeTable from "../../components/admin/revenue/resumeTable";
 export default function AdminRevenue() {
   const [date, setDate] = useState(moment().format("YYYY-MM-DD"));
   const total = useRef(0);
-  const [resumeData, setResumeData] = useState([]);
+  const [resumeData, setResumeData] = useState([[], []]);
   const navigate = useNavigate();
-
+  const [preparedData, setPreparedData] = useState([]);
   useEffect(() => {
     setResumeData([]);
   }, [date]);
 
-  const preparedData = useRef([]);
-
   useEffect(() => {
     function prepareData() {
-      preparedData.current = [];
-      resumeData.forEach((dataSource) => {
-        dataSource.forEach((dataItem) => {
-          // console.log(dataItem, "source");
-          let dataIndex = preparedData.current.findIndex(
-            (val) => val.nama_produk === dataItem.nama_produk
-          );
+      setPreparedData((prep) => {
+        prep = [];
+        resumeData.forEach((dataSource) => {
+          dataSource.forEach((dataItem) => {
+            let dataIndex = prep.findIndex(
+              (val) => val.nama_produk === dataItem.nama_produk
+            );
 
-          if (dataIndex === -1) {
-            preparedData.current.push(dataItem);
-          } else {
-            preparedData.current[dataIndex].jumlah += dataItem.jumlah;
-            preparedData.current[dataIndex].total += dataItem.total;
-          }
-          // console.log(preparedData, "source");
-          total.current += dataItem.total;
+            if (dataIndex === -1) {
+              prep.push({ ...dataItem });
+            } else {
+              prep[dataIndex].jumlah += dataItem.jumlah;
+              prep[dataIndex].total += dataItem.total;
+            }
+
+            total.current += dataItem.total;
+          });
         });
+        return prep;
       });
     }
     prepareData();
   }, [resumeData]);
-  console.log(preparedData, "prep");
 
   return (
     <Admin sx={{ "& .gridjs-table": { width: "100%" } }}>
@@ -90,7 +89,7 @@ export default function AdminRevenue() {
         <Typography component={"h6"} variant="body1">
           Total
         </Typography>
-        <ResumeTable key={resumeData} data={preparedData.current} />
+        <ResumeTable data={preparedData} />
         <Fab
           size="large"
           color="secondary"

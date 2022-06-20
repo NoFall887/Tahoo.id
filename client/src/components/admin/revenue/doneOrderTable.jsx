@@ -19,6 +19,7 @@ export default function DoneOrderTable({ date, setResumeData }) {
           if (isFirst.current) {
             setResumeData((data) => {
               data[0] = respData;
+
               return [...data];
             });
             isFirst.current = false;

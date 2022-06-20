@@ -10,7 +10,7 @@ export default function RevenueTable({ date, setResumeData }) {
   const isFirst = useRef(true);
   const dataOnEdit = useRef({});
   const [open, setOpen] = useState(false);
-  console.log(open);
+
   var grid = new Grid({
     columns: [
       "No",
@@ -54,8 +54,6 @@ export default function RevenueTable({ date, setResumeData }) {
           });
           isFirst.current = false;
         }
-
-        console.log(respData);
 
         resolve({
           data: respData.map((row, index) => {

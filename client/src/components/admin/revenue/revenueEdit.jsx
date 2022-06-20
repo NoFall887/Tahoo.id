@@ -22,7 +22,6 @@ export default function RevenueEdit({ data, open, setOpen, renderGrid }) {
     setFormData(data);
   }, [data]);
 
-  console.log(formData);
   function handleChange(value) {
     setFormData((formData) => {
       if (parseInt(value) < 0 || value === "") {
