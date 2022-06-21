@@ -25,6 +25,8 @@ import AddRevenue from "./pages/admin/addRevenue";
 import Loading from "./components/loading";
 
 axios.defaults.baseURL = "http://localhost:5000";
+// uncomment on deployment
+// axios.defaults.baseURL = "https://tahoo-id.herokuapp.com";
 export const UserContext = createContext({});
 
 function App() {

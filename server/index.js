@@ -13,13 +13,15 @@ const { profileRouter } = require("./controllers/profile");
 const orderRoute = require("./controllers/order");
 const { cartRouter } = require("./controllers/cart");
 const { revenueRoute } = require("./controllers/revenue");
-
+const path = require("path");
 dotenv.config();
 app.use(express.json());
 app.use(
   cors({
     credentials: true,
     origin: "http://localhost:3000",
+    // uncomment on deployment
+    // origin:"http://tahoo-id.herokuapp.com",
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   })
 );
