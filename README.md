@@ -6,7 +6,7 @@ Aplikasi web untuk penjualan dan pencatatan usaha produksi tahu
 
 ## Tech Stack
 
-**Client:** React, Bootstrap, Material Icons
+**Client:** ReactJS, Bootstrap, Material UI
 
 **Server:** Node, Express, PostgreSQL
 
