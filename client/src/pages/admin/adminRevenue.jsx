@@ -17,13 +17,15 @@ export default function AdminRevenue() {
   const navigate = useNavigate();
   const [preparedData, setPreparedData] = useState([]);
   useEffect(() => {
-    setResumeData([]);
+    setResumeData([[], []]);
+    total.current = 0;
   }, [date]);
 
   useEffect(() => {
     function prepareData() {
       setPreparedData((prep) => {
         prep = [];
+        total.current = 0;
         resumeData.forEach((dataSource) => {
           dataSource.forEach((dataItem) => {
             let dataIndex = prep.findIndex(

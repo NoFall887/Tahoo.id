@@ -32,6 +32,7 @@ async function getRevenue(date) {
   nama_produk,
   tanggal,
   jumlah,
+  catatan_pendapatan.harga,
   (catatan_pendapatan.harga*jumlah)::int AS total
   FROM catatan_pendapatan
   JOIN produk USING(id_produk)

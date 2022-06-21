@@ -18,8 +18,7 @@ export default function RevenueEdit({ data, open, setOpen, renderGrid }) {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    data.harga = data.total / data.jumlah;
-    setFormData(data);
+    setFormData({ ...data });
   }, [data]);
 
   function handleChange(value) {
